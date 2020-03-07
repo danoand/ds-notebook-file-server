@@ -46,7 +46,7 @@ func main() {
 	port := os.Getenv("DANODS_PORT")
 	if len(port) == 0 {
 		// missing environment variable (use a default)
-		port = "8080"
+		port = "localhost:9000"
 		log.Printf("WARN: %v - missing env var: %v - using default value: %v\n",
 			utils.FileLine(),
 			"DANODS_PORT",
@@ -66,8 +66,8 @@ func main() {
 	rtr.Static("/files", fileRoot)
 
 	// Start the web server
-	log.Printf("INFO - %v - Starting the webserver on :%v", utils.FileLine(), port)
-	serveErr := rtr.Run(fmt.Sprintf(":%v", port))
+	log.Printf("INFO - %v - Starting the webserver on: %v", utils.FileLine(), port)
+	serveErr := rtr.Run(fmt.Sprintf("%v", port))
 	if serveErr != nil {
 		log.Printf("INFO: %v - Program terminating with error (if any see: %v)", utils.FileLine(), serveErr)
 	}
